@@ -1,0 +1,49 @@
+import cn from "@/lib/helpers";
+
+
+
+
+export default function Select({label,options=[],error,id,className,...props}){
+    return(
+        <div className="space-y-2">
+            {label && (
+              <label
+              htmlFor={id}
+              className="block text-sm font-medium text-slate-700"
+              >{label}</label>
+            )}
+
+
+
+            <select
+            id={id}
+            className={cn(
+                  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2",
+          "text-slate-900 outline-none transition",
+          "focus:border-blue-500 focus:ring-2 focus:ring-blue-100",
+          error && "border-red-500",
+          className
+        )}
+        {...props}
+      
+            >
+
+
+                <option value="">Select an Option</option>
+
+                {options.map((option)=>(
+                    <option
+                    key={option.value}
+                    value={option.value}
+                    >{option.label}</option>
+                ))}
+            </select>
+
+            {error && (
+                <p className="text-sm text-red-600">
+                    {error}
+                </p>
+            )}
+        </div>
+    )
+}
