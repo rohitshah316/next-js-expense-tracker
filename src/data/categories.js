@@ -40,3 +40,15 @@ export const categories = [
     color: "#64748b",
   },
 ];
+
+
+export function getCategoryById(id){
+  return categories.find((category)=>category.id===id) || categories[categories.length-1];
+}
+
+export function getCategoryOptions(){
+  return categories.map((category)=>({
+    value:category.id,
+    label: category.name
+  }))
+}
