@@ -16,7 +16,7 @@ export function ExpenseProvider({children}){
     const updateExpense=(updatedExpense)=>{
         setExpenses((currentExpenses)=>
         currentExpenses.map((expense)=>
-            expense.id===updateExpense.id?updateExpense:expense
+            expense.id===updatedExpense.id?updatedExpense:expense
         ))
     }
 
