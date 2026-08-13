@@ -6,8 +6,14 @@ import { STORAGE_KEYS } from '@/lib/constants';
 
 const ExpenseContext=createContext(null);
 
+const defaultBudget={
+    monthly:0,
+    categories:{},
+}
+
 export function ExpenseProvider({children}){
     const [expenses,setExpenses,isLoaded]=useLocalStorage(STORAGE_KEYS.EXPENSES,[]);
+    const [budget,setBudget,isBudgetLoaded]=useLocalStorage(STORAGE_KEYS.BUDGET,defaultBudget)
 
     const addExpense=(expense)=>{
         setExpenses((currentExpenses)=>[...currentExpenses,expense,]);
@@ -35,9 +41,20 @@ export function ExpenseProvider({children}){
         )
     }
 
+    const updateBudget=(updates)=>{
+        setBudget((current)=>({...current,...updates}));
+    }
+
+    const updateCategoryBudget=(categoryId,amount)=>{
+        setBudget((current)=>({
+            ...current,
+            categories:{...current.categories,[categoryId]:amount}
+        }))
+    }
+
 
     return(
-        <ExpenseContext.Provider value={{expenses,addExpense,deleteExpense,updateExpense,getExpense,isLoaded}}>
+        <ExpenseContext.Provider value={{expenses,addExpense,deleteExpense,updateExpense,getExpense,isLoaded,budget,updateBudget,updateCategoryBudget,isBudgetLoaded}}>
 
             {children}
         </ExpenseContext.Provider>
