@@ -11,9 +11,14 @@ const defaultBudget={
     categories:{},
 }
 
+const defaultSettings={
+    currency:"NPR"
+}
+
 export function ExpenseProvider({children}){
     const [expenses,setExpenses,isLoaded]=useLocalStorage(STORAGE_KEYS.EXPENSES,[]);
     const [budget,setBudget,isBudgetLoaded]=useLocalStorage(STORAGE_KEYS.BUDGET,defaultBudget)
+    const [settings,setSettings,isSettingsLoaded]=useLocalStorage(STORAGE_KEYS.SETTINGS,defaultSettings)
 
     const addExpense=(expense)=>{
         setExpenses((currentExpenses)=>[...currentExpenses,expense,]);
@@ -52,9 +57,20 @@ export function ExpenseProvider({children}){
         }))
     }
 
+    const updateSettings=(updates)=>{
+        setSettings((current)=>({
+            ...current,...updates
+        }))
+    }
+
+    const clearAllData=()=>{
+        setExpenses([]);
+        setBudget(defaultBudget);
+    }
+
 
     return(
-        <ExpenseContext.Provider value={{expenses,addExpense,deleteExpense,updateExpense,getExpense,isLoaded,budget,updateBudget,updateCategoryBudget,isBudgetLoaded}}>
+        <ExpenseContext.Provider value={{expenses,addExpense,deleteExpense,updateExpense,getExpense,isLoaded,budget,updateBudget,updateCategoryBudget,isBudgetLoaded,settings,updateSettings,isSettingsLoaded,clearAllData}}>
 
             {children}
         </ExpenseContext.Provider>
