@@ -1,9 +1,33 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import { useRouter } from "next/navigation";
+import ExpenseForm from "@/components/expense/ExpenseForm";
+import Card from "@/components/ui/Card";
+import useExpenses from "@/hooks/useExpenses";
+
+export default function AddExpensePage() {
+  const router = useRouter();
+  const { addExpense } = useExpenses();
+
+  const handleSubmit = (expenseData) => {
+    addExpense({
+      id: crypto.randomUUID(),
+      ...expenseData,
+    });
+
+    router.push("/dashboard/expenses");
+  };
+
   return (
-    <div>page</div>
-  )
-}
+    <div className="mx-auto max-w-2xl space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold">Add Expense</h1>
+        <p className="text-slate-500">Record a new expense</p>
+      </div>
 
-export default page
+      <Card>
+        <ExpenseForm onSubmit={handleSubmit} submitLabel="Add Expense" />
+      </Card>
+    </div>
+  );
+}

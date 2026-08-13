@@ -13,7 +13,7 @@ export function validateExpense(expense){
 
     if(!expense.amount){
         errors.amount="Amount is required";
-    }else if(isNan(expense.amount) || Number(expense.amount)<=0){
+    }else if(isNaN(expense.amount) || Number(expense.amount)<=0){
         errors.amount="Amount must be a positive number";
     }
 
